@@ -18,6 +18,11 @@ public class SsoConfigurerAdapter implements Filter {
     private RequestDispatcher requestDispatcher;
 
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        requestDispatcher = new RequestDispatcher();
+    }
+
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         SsoResponse response = new SsoResponse((HttpServletResponse) servletResponse);
         try {
