@@ -7,6 +7,8 @@ import java.util.Set;
  */
 public class Authentication {
 
+    private long timestamp = System.currentTimeMillis();
+
     private String uid;
 
     private Set<String> authorities;
@@ -25,5 +27,13 @@ public class Authentication {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public void updateTimestamp(){
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public long getTimestamp(){
+        return timestamp;
     }
 }
