@@ -38,4 +38,15 @@ public class SsoResponse extends HttpServletResponseWrapper {
         writer.print(json);
         writer.flush();
     }
+
+    public void responseException(Exception e) throws IOException {
+        setContentType("application/json;charset=UTF-8");
+        setStatus(500);
+        PrintWriter writer = getWriter();
+        JSONObject json = new JSONObject();
+        json.put("code", 100000);
+        json.put("msg", "系统异常，请稍后再试");
+        writer.print(json);
+        writer.flush();
+    }
 }

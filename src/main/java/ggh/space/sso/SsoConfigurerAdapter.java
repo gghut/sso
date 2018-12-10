@@ -31,8 +31,7 @@ public class SsoConfigurerAdapter implements Filter {
         }catch (CodeException e){
             response.responseException(e);
         }catch (Exception e){
-            response.setStatus(500);
-            e.printStackTrace();
+            response.responseException(e);
         }
     }
 }
