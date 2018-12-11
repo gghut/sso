@@ -13,7 +13,7 @@ public class PermissionException extends CodeException {
 
     @Override
     public int getHttpStatusCode() {
-        return 0;
+        return 403;
     }
 
     @Override

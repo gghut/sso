@@ -11,7 +11,7 @@ public class PasswordNotMatchException extends CodeException {
 
     @Override
     public int getHttpStatusCode() {
-        return 0;
+        return 403;
     }
 
     @Override

@@ -4,17 +4,15 @@ import ggh.space.entity.Authentication;
 import ggh.space.exception.NotYetLoginException;
 import ggh.space.exception.PermissionException;
 import ggh.space.http.SsoRequest;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.*;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author by ggh on 18-12-4.
  */
-public abstract class AuthenticationManager extends TimerTask {
+public class AuthenticationManager extends TimerTask {
 
     private Map<String, Authentication> map = new HashMap<String, Authentication>();
 
@@ -34,17 +32,22 @@ public abstract class AuthenticationManager extends TimerTask {
         }
     }
 
+    public void setAuthentication(Authentication authentication){
+        map.put(authentication.getToken(), authentication);
+    }
+
+
     public Authentication getAuthentication(String token){
         if (true){
             Authentication auth = map.get(token);
-            if (System.currentTimeMillis() - auth.getTimestamp() > expire){
+            if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
                 return auth;
             }
         }
         return null;
     }
 
-    public void authentication(Map<Pattern, String> patterns, SsoRequest request){
+    public boolean authentication(Map<Pattern, String> patterns, SsoRequest request){
         Authentication authentication = getAuthentication(request.getToken());
         if(authentication == null){
             throw new NotYetLoginException();
@@ -55,10 +58,11 @@ public abstract class AuthenticationManager extends TimerTask {
             if(matcher.find()){
                 Set<String> authorities = authentication.getAuthorities();
                 if (authorities != null && authorities.contains(entry.getValue())){
-                    return;
+                    return true;
                 }
                 throw new PermissionException();
             }
         }
+        return true;
     }
 }

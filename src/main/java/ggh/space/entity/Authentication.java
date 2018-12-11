@@ -1,6 +1,7 @@
 package ggh.space.entity;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author by ggh on 18-12-4.
@@ -9,9 +10,20 @@ public class Authentication {
 
     private long timestamp = System.currentTimeMillis();
 
+    private String token;
+
     private String uid;
 
     private Set<String> authorities;
+
+    public String getToken(){
+        return token;
+    }
+
+    public void generateToken(){
+        UUID uuid = UUID.randomUUID();
+        token = uuid.toString().replace("-", "");
+    }
 
     public String getUid() {
         return uid;

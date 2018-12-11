@@ -17,11 +17,14 @@ public class SsoRequest extends HttpServletRequestWrapper {
     }
 
     public String getToken() {
-        String token = this.getParameter("token");
+        String token = getParameter("token");
         if(token == null) {
-            Matcher matcher = pattern.matcher(this.getHeader("Cookie"));
-            if(matcher.find()) {
-                return matcher.group(1);
+            String cookie = getHeader("Cookie");
+            if (cookie != null){
+                Matcher matcher = pattern.matcher(cookie);
+                if(matcher.find()) {
+                    return matcher.group(1);
+                }
             }
         }
         return token;

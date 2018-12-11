@@ -11,4 +11,6 @@ public abstract class AuthenticationProvider {
     void authorization(SsoRequest request, SsoResponse response){
 
     }
+
+
 }

@@ -6,16 +6,16 @@ package ggh.space.exception;
 public class NotYetLoginException extends CodeException {
     @Override
     public int getResponseCode() {
-        return 0;
+        return 200005;
     }
 
     @Override
     public int getHttpStatusCode() {
-        return 0;
+        return 403;
     }
 
     @Override
     public String getResponseMsg() {
-        return null;
+        return "not yet login";
     }
 }
