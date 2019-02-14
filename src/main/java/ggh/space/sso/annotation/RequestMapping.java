@@ -1,4 +1,4 @@
-package ggh.space.annotation;
+package ggh.space.sso.annotation;
 
 import java.lang.annotation.*;
 

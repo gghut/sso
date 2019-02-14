@@ -1,9 +1,9 @@
 package ggh.space.sso;
 
-import ggh.space.exception.*;
-import ggh.space.http.SsoRequest;
-import ggh.space.http.SsoResponse;
-import ggh.space.service.GrantDispatcher;
+import ggh.space.sso.http.GrantRequest;
+import ggh.space.sso.http.GrantResponse;
+import ggh.space.sso.service.GrantDispatcher;
+import ggh.space.sso.exception.CodeException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +24,9 @@ public class GrantConfigurerAdapter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        SsoResponse response = new SsoResponse((HttpServletResponse) servletResponse);
+        GrantResponse response = new GrantResponse((HttpServletResponse) servletResponse);
         try {
-            if(!grantDispatcher.dispatcher(new SsoRequest((HttpServletRequest) servletRequest), new SsoResponse(response))){
+            if(!grantDispatcher.dispatcher(new GrantRequest((HttpServletRequest) servletRequest), new GrantResponse(response))){
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         }catch (CodeException e){

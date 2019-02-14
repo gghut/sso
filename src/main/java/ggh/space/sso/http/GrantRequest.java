@@ -1,4 +1,4 @@
-package ggh.space.http;
+package ggh.space.sso.http;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 /**
  * @author by ggh on 18-12-4.
  */
-public class SsoRequest extends HttpServletRequestWrapper {
+public class GrantRequest extends HttpServletRequestWrapper {
 
     private Pattern pattern = Pattern.compile("token=([0-9a-z]+)");
 
-    public SsoRequest(HttpServletRequest request) {
+    public GrantRequest(HttpServletRequest request) {
         super(request);
     }
 

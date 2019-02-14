@@ -1,9 +1,9 @@
-package ggh.space.exception;
+package ggh.space.sso.exception;
 
 /**
  * @author by ggh on 18-12-4.
  */
-public class PasswordNotMatchException extends CodeException {
+public class UserNotFoundException extends CodeException {
     @Override
     public int getResponseCode() {
         return 0;

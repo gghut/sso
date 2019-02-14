@@ -1,9 +1,9 @@
-package ggh.space.service;
+package ggh.space.sso.service;
 
-import ggh.space.entity.Authentication;
-import ggh.space.exception.NotYetLoginException;
-import ggh.space.exception.PermissionException;
-import ggh.space.http.SsoRequest;
+import ggh.space.sso.entity.Authentication;
+import ggh.space.sso.exception.NotYetLoginException;
+import ggh.space.sso.exception.PermissionException;
+import ggh.space.sso.http.GrantRequest;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -47,7 +47,7 @@ public class AuthenticationManager extends TimerTask {
         return null;
     }
 
-    public boolean authentication(Map<Pattern, String> patterns, SsoRequest request){
+    public boolean authentication(Map<Pattern, String> patterns, GrantRequest request){
         Authentication authentication = getAuthentication(request.getToken());
         if(authentication == null){
             throw new NotYetLoginException();

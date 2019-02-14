@@ -1,4 +1,4 @@
-package ggh.space.service;
+package ggh.space.sso.service;
 
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 

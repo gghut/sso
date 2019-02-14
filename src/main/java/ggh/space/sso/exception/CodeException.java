@@ -1,4 +1,4 @@
-package ggh.space.exception;
+package ggh.space.sso.exception;
 
 /**
  * @author by ggh on 18-12-4.

@@ -1,20 +1,19 @@
-package ggh.space.http;
+package ggh.space.sso.http;
 
 import com.alibaba.fastjson.JSONObject;
-import ggh.space.exception.CodeException;
+import ggh.space.sso.exception.CodeException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  * @author by ggh on 18-12-4.
  */
-public class SsoResponse extends HttpServletResponseWrapper {
+public class GrantResponse extends HttpServletResponseWrapper {
 
-    public SsoResponse(HttpServletResponse response) {
+    public GrantResponse(HttpServletResponse response) {
         super(response);
     }
 

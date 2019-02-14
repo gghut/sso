@@ -1,4 +1,4 @@
-package ggh.space.annotation;
+package ggh.space.sso.annotation;
 
 import org.springframework.context.annotation.Import;
 
@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import({EnableSsoSelector.class})
-public @interface EnableSso {
+@Import({EnableAuthSelector.class})
+public @interface EnableAuth {
 }

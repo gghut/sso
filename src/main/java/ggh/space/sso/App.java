@@ -1,4 +1,4 @@
-package ggh.space;
+package ggh.space.sso;
 
 /**
  * Hello world!

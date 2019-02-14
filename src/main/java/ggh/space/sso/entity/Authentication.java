@@ -1,4 +1,4 @@
-package ggh.space.entity;
+package ggh.space.sso.entity;
 
 import java.util.Set;
 import java.util.UUID;

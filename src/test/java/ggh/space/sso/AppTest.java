@@ -1,4 +1,4 @@
-package ggh.space;
+package ggh.space.sso;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

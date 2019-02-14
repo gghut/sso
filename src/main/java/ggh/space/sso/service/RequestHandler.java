@@ -1,10 +1,10 @@
-package ggh.space.service;
+package ggh.space.sso.service;
 
 import com.alibaba.fastjson.JSONObject;
-import ggh.space.annotation.RequestMapping;
-import ggh.space.entity.Authentication;
-import ggh.space.http.SsoRequest;
-import ggh.space.http.SsoResponse;
+import ggh.space.sso.annotation.RequestMapping;
+import ggh.space.sso.entity.Authentication;
+import ggh.space.sso.http.GrantRequest;
+import ggh.space.sso.http.GrantResponse;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class RequestHandler {
     }
 
     @RequestMapping("/login")
-    public void test(SsoRequest request, SsoResponse response) throws IOException {
+    public void test(GrantRequest request, GrantResponse response) throws IOException {
          Authentication authentication = new Authentication();
          authentication.setUid(String.valueOf(1));
          authentication.generateToken();

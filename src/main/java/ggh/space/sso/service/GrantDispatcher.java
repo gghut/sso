@@ -1,12 +1,11 @@
-package ggh.space.service;
+package ggh.space.sso.service;
 
-import ggh.space.annotation.RequestMapping;
-import ggh.space.http.SsoRequest;
-import ggh.space.http.SsoResponse;
+import ggh.space.sso.annotation.RequestMapping;
+import ggh.space.sso.http.GrantRequest;
+import ggh.space.sso.http.GrantResponse;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class GrantDispatcher {
         }
     }
 
-    public boolean dispatcher(SsoRequest request, SsoResponse response) throws InvocationTargetException, IllegalAccessException {
+    public boolean dispatcher(GrantRequest request, GrantResponse response) throws InvocationTargetException, IllegalAccessException {
         String uri = request.getRequestURI();
         if (methodMap.containsKey(uri)){
             methodMap.get(uri).invoke(handler, request, response);
