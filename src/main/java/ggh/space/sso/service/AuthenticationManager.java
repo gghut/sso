@@ -38,13 +38,12 @@ public class AuthenticationManager extends TimerTask {
 
 
     public Authentication getAuthentication(String token){
-        if (true){
-            Authentication auth = map.get(token);
-            if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
-                return auth;
-            }
+        Authentication auth = map.get(token);
+        if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
+            return auth;
+        }else {
+            return null;
         }
-        return null;
     }
 
     public boolean authentication(Map<Pattern, String> patterns, GrantRequest request){

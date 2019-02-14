@@ -36,7 +36,7 @@ public class GrantDispatcher {
             methodMap.get(uri).invoke(handler, request, response);
             return true;
         }else {
-            return authenticationManager.authentication(new HashMap<>(), request);
+            return authenticationManager.authentication(new HashMap<>(16), request);
         }
     }
 }
