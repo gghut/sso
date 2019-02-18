@@ -26,7 +26,7 @@ public class AuthenticationManager extends TimerTask {
     public void run(){
         long current = System.currentTimeMillis();
         for (Map.Entry<String, Authentication> entry: map.entrySet()){
-            if (current- entry.getValue().getTimestamp() > expire){
+            if (current- entry.getValue().getTimestamp() > expire+2000){
                 map.remove(entry.getKey());
             }
         }
