@@ -38,6 +38,7 @@ public class AuthenticationManager extends TimerTask {
 
 
     public Authentication getAuthentication(String token){
+        map.put("233", new Authentication());
         Authentication auth = map.get(token);
         if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
             return auth;
@@ -46,22 +47,37 @@ public class AuthenticationManager extends TimerTask {
         }
     }
 
-    public boolean authentication(Map<Pattern, String> patterns, GrantRequest request){
+    public boolean authentication(Map<Pattern, List<String>> patterns, GrantRequest request){
+        String uri = request.getRequestURI();
         Authentication authentication = getAuthentication(request.getToken());
-        if(authentication == null){
-            throw new NotYetLoginException();
-        }
-        request.setAttribute("uid",authentication.getUid());
-        for (Map.Entry<Pattern, String> entry: patterns.entrySet()){
-            Matcher matcher = entry.getKey().matcher(request.getRequestURI());
-            if(matcher.find()){
-                Set<String> authorities = authentication.getAuthorities();
-                if (authorities != null && authorities.contains(entry.getValue())){
+        for (Map.Entry<Pattern, List<String>> entry:patterns.entrySet()){
+            if (entry.getKey().matcher(uri).find()){
+                if (authentication != null && authentication.getAuthorities().stream().anyMatch(role->entry.getValue().contains(role))){
                     return true;
                 }
-                throw new PermissionException();
             }
         }
-        return true;
+        if (authentication == null){
+            throw new NotYetLoginException();
+        } else {
+            throw new PermissionException();
+        }
+
+//        Authentication authentication = getAuthentication(request.getToken());
+//        if(authentication == null){
+//            throw new NotYetLoginException();
+//        }
+//        request.setAttribute("uid",authentication.getUid());
+//        for (Map.Entry<Pattern, String> entry: patterns.entrySet()){
+//            Matcher matcher = entry.getKey().matcher(request.getRequestURI());
+//            if(matcher.find()){
+//                Set<String> authorities = authentication.getAuthorities();
+//                if (authorities != null && authorities.contains(entry.getValue())){
+//                    return true;
+//                }
+//                throw new PermissionException();
+//            }
+//        }
+//        return true;
     }
 }

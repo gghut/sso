@@ -1,5 +1,7 @@
 package ggh.space.sso.entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,7 +16,7 @@ public class Authentication {
 
     private String uid;
 
-    private Set<String> authorities;
+    private Set<String> authorities = new HashSet<>();
 
     public String getToken(){
         return token;
