@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class AuthenticationManager extends TimerTask {
 
-    private Map<String, Authentication> map = new HashMap<String, Authentication>();
+    private Map<String, Authentication> map = new HashMap<>();
 
     private long expire = 60000*30;
 
