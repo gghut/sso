@@ -1,10 +1,10 @@
 package ggh.space.sso;
 
+import ggh.space.sso.exception.CodeException;
 import ggh.space.sso.http.GrantRequest;
 import ggh.space.sso.http.GrantResponse;
 import ggh.space.sso.service.AuthenticationManager;
-import ggh.space.sso.service.GrantDispatcher;
-import ggh.space.sso.exception.CodeException;
+import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,6 @@ public class GrantConfigurerAdapter implements Filter {
             String uri = new GrantRequest((HttpServletRequest) servletRequest).getRequestURI();
             if (publicUrls == null || !getPublicUrls().contains(uri)){
                 Map<String, List<String>> roles = getRoleList();
-                Map<Pattern, List<String>> patternStringMap = new HashMap<>(16);
                 Map<String, List<String>> urlTemp = new HashMap<>(16);
                 for (Map.Entry<String, List<String>> role:roles.entrySet()){
                     for (String url:role.getValue()){
@@ -50,9 +49,9 @@ public class GrantConfigurerAdapter implements Filter {
                         }
                     }
                 }
-                urlTemp.forEach((k,v)-> patternStringMap.put(Pattern.compile(k), v));
-//                AntPathMatcher
-                authenticationManager.authentication(patternStringMap, new GrantRequest((HttpServletRequest) servletRequest));
+                if(authenticationManager.authentication(urlTemp, new GrantRequest((HttpServletRequest) servletRequest))){
+                    filterChain.doFilter(servletRequest, servletResponse);
+                }
             }
         }catch (CodeException e){
             response.responseException(e);

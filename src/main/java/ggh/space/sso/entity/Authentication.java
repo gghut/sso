@@ -1,9 +1,6 @@
 package ggh.space.sso.entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author by ggh on 18-12-4.
@@ -14,9 +11,9 @@ public class Authentication {
 
     private String token;
 
-    private String uid;
-
     private Set<String> authorities = new HashSet<>();
+
+    private Map<String, String> params = new HashMap<>();
 
     public String getToken(){
         return token;
@@ -25,14 +22,6 @@ public class Authentication {
     public void generateToken(){
         UUID uuid = UUID.randomUUID();
         token = uuid.toString().replace("-", "");
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public Set<String> getAuthorities() {
@@ -49,5 +38,13 @@ public class Authentication {
 
     public long getTimestamp(){
         return timestamp;
+    }
+
+    public Map<String, String> getParams(){
+        return params;
+    }
+
+    public void addParam(String key, String value){
+        params.put(key, value);
     }
 }

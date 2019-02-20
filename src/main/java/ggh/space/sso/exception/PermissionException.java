@@ -6,7 +6,7 @@ package ggh.space.sso.exception;
 public class PermissionException extends CodeException {
     @Override
     public int getResponseCode() {
-        return 0;
+        return 200007;
     }
 
     @Override

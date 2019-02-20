@@ -4,10 +4,9 @@ import ggh.space.sso.entity.Authentication;
 import ggh.space.sso.exception.NotYetLoginException;
 import ggh.space.sso.exception.PermissionException;
 import ggh.space.sso.http.GrantRequest;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author by ggh on 18-12-4.
@@ -25,11 +24,12 @@ public class AuthenticationManager extends TimerTask {
     @Override
     public void run(){
         long current = System.currentTimeMillis();
-        for (Map.Entry<String, Authentication> entry: map.entrySet()){
-            if (current- entry.getValue().getTimestamp() > expire+2000){
-                map.remove(entry.getKey());
+        long p = expire+2000;
+        map.forEach((key, value)->{
+            if (current- value.getTimestamp() > p){
+                map.remove(key);
             }
-        }
+        });
     }
 
     public void setAuthentication(Authentication authentication){
@@ -38,7 +38,7 @@ public class AuthenticationManager extends TimerTask {
 
 
     public Authentication getAuthentication(String token){
-        map.put("233", new Authentication());
+        map.put("233", new Authentication(){{setAuthorities(new HashSet<String>(){{add("USER");}});}});
         Authentication auth = map.get(token);
         if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
             return auth;
@@ -47,12 +47,16 @@ public class AuthenticationManager extends TimerTask {
         }
     }
 
-    public boolean authentication(Map<Pattern, List<String>> patterns, GrantRequest request){
+    public boolean authentication(Map<String, List<String>> patterns, GrantRequest request){
         String uri = request.getRequestURI();
         Authentication authentication = getAuthentication(request.getToken());
-        for (Map.Entry<Pattern, List<String>> entry:patterns.entrySet()){
-            if (entry.getKey().matcher(uri).find()){
-                if (authentication != null && authentication.getAuthorities().stream().anyMatch(role->entry.getValue().contains(role))){
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        for (Map.Entry<String, List<String>> entry:patterns.entrySet()){
+            if (antPathMatcher.match(entry.getKey(), uri)){
+                if (authentication == null && entry.getValue().contains("ACCESS")){
+                    return true;
+                } else if(authentication != null && authentication.getAuthorities().stream().anyMatch(role->entry.getValue().contains(role))){
+                    authentication.getParams().forEach(request::setAttribute);
                     return true;
                 }
             }
@@ -62,22 +66,5 @@ public class AuthenticationManager extends TimerTask {
         } else {
             throw new PermissionException();
         }
-
-//        Authentication authentication = getAuthentication(request.getToken());
-//        if(authentication == null){
-//            throw new NotYetLoginException();
-//        }
-//        request.setAttribute("uid",authentication.getUid());
-//        for (Map.Entry<Pattern, String> entry: patterns.entrySet()){
-//            Matcher matcher = entry.getKey().matcher(request.getRequestURI());
-//            if(matcher.find()){
-//                Set<String> authorities = authentication.getAuthorities();
-//                if (authorities != null && authorities.contains(entry.getValue())){
-//                    return true;
-//                }
-//                throw new PermissionException();
-//            }
-//        }
-//        return true;
     }
 }

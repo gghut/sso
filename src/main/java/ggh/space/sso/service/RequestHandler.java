@@ -22,7 +22,7 @@ public class RequestHandler {
     @RequestMapping("/login")
     public void test(GrantRequest request, GrantResponse response) throws IOException {
          Authentication authentication = new Authentication();
-         authentication.setUid(String.valueOf(1));
+         authentication.addParam("uid",String.valueOf(1));
          authentication.generateToken();
          manager.setAuthentication(authentication);
          JSONObject json = new JSONObject();
