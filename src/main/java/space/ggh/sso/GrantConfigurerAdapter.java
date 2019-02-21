@@ -4,6 +4,7 @@ import space.ggh.sso.exception.AbstractCodeException;
 import space.ggh.sso.http.GrantRequest;
 import space.ggh.sso.http.GrantResponse;
 import space.ggh.sso.service.AuthenticationManager;
+import space.ggh.sso.service.AuthenticationProvider;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +20,11 @@ import java.util.Map;
  */
 public class GrantConfigurerAdapter implements Filter {
 
-    private AuthenticationHandler authenticationHandler;
-
 
 
     private AuthenticationManager authenticationManager = new AuthenticationManager();
+
+    private AuthenticationHandler authenticationHandler = new AuthenticationProvider();
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -51,9 +52,12 @@ public class GrantConfigurerAdapter implements Filter {
                         }
                     }
                 }
-                if(authenticationManager.authentication(urlTemp, new GrantRequest((HttpServletRequest) servletRequest))){
-                    filterChain.doFilter(servletRequest, servletResponse);
+                GrantRequest request = new GrantRequest((HttpServletRequest) servletRequest);
+                if(authenticationManager.authentication(urlTemp, request)){
+                    filterChain.doFilter(request, servletResponse);
                 }
+            }else {
+                filterChain.doFilter(servletRequest, servletResponse);
             }
         }catch (AbstractCodeException e){
             response.responseException(e);
@@ -76,6 +80,10 @@ public class GrantConfigurerAdapter implements Filter {
     }
 
     public List<String> getPublicUrls(){
-        return new ArrayList<>();
+        return new ArrayList<String>(){{add("/login");}};
+    }
+
+    protected AuthenticationHandler getAuthenticationHandler(){
+        return authenticationHandler;
     }
 }

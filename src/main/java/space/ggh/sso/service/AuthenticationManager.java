@@ -11,45 +11,13 @@ import java.util.*;
 /**
  * @author by ggh on 18-12-4.
  */
-public class AuthenticationManager extends TimerTask {
+public class AuthenticationManager {
 
-    private Map<String, Authentication> map = new HashMap<>();
-
-    private long expire = 60000*30;
-
-    public AuthenticationManager(){
-        new Timer().schedule(this, 20000, expire);
-    }
-
-    @Override
-    public void run(){
-        long current = System.currentTimeMillis();
-        long p = expire+2000;
-        map.forEach((key, value)->{
-            if (current- value.getTimestamp() > p){
-                map.remove(key);
-            }
-        });
-    }
-
-    public void setAuthentication(Authentication authentication){
-        map.put(authentication.getToken(), authentication);
-    }
-
-
-    public Authentication getAuthentication(String token){
-        map.put("233", new Authentication(){{setAuthorities(new HashSet<String>(){{add("USER");}});}});
-        Authentication auth = map.get(token);
-        if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){
-            return auth;
-        }else {
-            return null;
-        }
-    }
+    private AuthenticationStorageManager storageManager = AuthenticationStorageManager.instance();
 
     public boolean authentication(Map<String, List<String>> patterns, GrantRequest request){
         String uri = request.getRequestURI();
-        Authentication authentication = getAuthentication(request.getToken());
+        Authentication authentication = storageManager.get(request.getToken());
         AntPathMatcher antPathMatcher = new AntPathMatcher();
         for (Map.Entry<String, List<String>> entry:patterns.entrySet()){
             if (antPathMatcher.match(entry.getKey(), uri)){

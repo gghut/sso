@@ -11,9 +11,9 @@ public class Authentication {
 
     private String token;
 
-    private Set<String> authorities = new HashSet<>();
+    private Collection<String> authorities = new HashSet<>();
 
-    private Map<String, String> params = new HashMap<>();
+    private Map<String, Object> params = new HashMap<>();
 
     public String getToken(){
         return token;
@@ -24,11 +24,11 @@ public class Authentication {
         token = uuid.toString().replace("-", "");
     }
 
-    public Set<String> getAuthorities() {
+    public Collection<String> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<String> authorities) {
+    public void setAuthorities(Collection<String> authorities) {
         this.authorities = authorities;
     }
 
@@ -40,11 +40,15 @@ public class Authentication {
         return timestamp;
     }
 
-    public Map<String, String> getParams(){
+    public Map<String, Object> getParams(){
         return params;
     }
 
     public void addParam(String key, String value){
         params.put(key, value);
+    }
+
+    public void setParams(Map<String, Object> params){
+        this.params = params;
     }
 }

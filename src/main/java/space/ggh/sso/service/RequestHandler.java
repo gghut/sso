@@ -24,7 +24,7 @@ public class RequestHandler {
          Authentication authentication = new Authentication();
          authentication.addParam("uid",String.valueOf(1));
          authentication.generateToken();
-         manager.setAuthentication(authentication);
+//         manager.setAuthentication(authentication);
          JSONObject json = new JSONObject();
          json.put("token", authentication.getToken());
          response.setToken(authentication.getToken());

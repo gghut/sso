@@ -14,7 +14,7 @@ public interface AuthenticationHandler {
      * @param params 参数列表
      * @return 角色列表
      */
-    String initToken(Collection<String> roles,Map<String, String> params);
+    String initToken(Collection<String> roles,Map<String, Object> params);
 
     boolean deleteToken(String token);
 
