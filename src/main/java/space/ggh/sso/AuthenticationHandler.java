@@ -1,4 +1,4 @@
-package space.ggh.sso.listener;
+package space.ggh.sso;
 
 import java.util.Collection;
 import java.util.Map;
@@ -19,4 +19,6 @@ public interface AuthenticationHandler {
     boolean deleteToken(String token);
 
     String initCaptcha(long timestamp);
+
+    boolean verifyCaptcha(long timestamp, int random);
 }

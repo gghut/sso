@@ -19,6 +19,10 @@ import java.util.Map;
  */
 public class GrantConfigurerAdapter implements Filter {
 
+    private AuthenticationHandler authenticationHandler;
+
+
+
     private AuthenticationManager authenticationManager = new AuthenticationManager();
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
