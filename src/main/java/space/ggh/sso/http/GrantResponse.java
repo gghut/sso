@@ -1,7 +1,7 @@
 package space.ggh.sso.http;
 
 import com.alibaba.fastjson.JSONObject;
-import space.ggh.sso.exception.CodeException;
+import space.ggh.sso.exception.AbstractCodeException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -28,7 +28,7 @@ public class GrantResponse extends HttpServletResponseWrapper {
         writer.flush();
     }
 
-    public void responseException(CodeException e) throws IOException {
+    public void responseException(AbstractCodeException e) throws IOException {
         setContentType("application/json;charset=UTF-8");
         setStatus(e.getHttpStatusCode());
         PrintWriter writer = getWriter();

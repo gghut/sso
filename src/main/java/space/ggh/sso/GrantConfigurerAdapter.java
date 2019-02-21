@@ -1,6 +1,6 @@
 package space.ggh.sso;
 
-import space.ggh.sso.exception.CodeException;
+import space.ggh.sso.exception.AbstractCodeException;
 import space.ggh.sso.http.GrantRequest;
 import space.ggh.sso.http.GrantResponse;
 import space.ggh.sso.service.AuthenticationManager;
@@ -55,7 +55,7 @@ public class GrantConfigurerAdapter implements Filter {
                     filterChain.doFilter(servletRequest, servletResponse);
                 }
             }
-        }catch (CodeException e){
+        }catch (AbstractCodeException e){
             response.responseException(e);
         }catch (Exception e){
             e.printStackTrace();
