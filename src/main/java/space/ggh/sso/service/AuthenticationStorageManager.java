@@ -48,6 +48,10 @@ public class AuthenticationStorageManager extends TimerTask {
         map.put(authentication.getToken(), authentication);
     }
 
+    public boolean remove(String token){
+        return map.remove(token) != null;
+    }
+
     public Authentication get(String token){
         Authentication auth = map.get(token);
         if (auth != null && System.currentTimeMillis() - auth.getTimestamp() < expire){

@@ -27,7 +27,7 @@ public class AuthenticationProvider implements AuthenticationHandler{
 
     @Override
     public boolean deleteToken(String token) {
-        return false;
+        return authenticationManager.remove(token);
     }
 
     @Override
